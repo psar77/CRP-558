@@ -1,4 +1,5 @@
 <!doctype html>
+<html>
 <title>CSS Grid Template 1</title>
 <style>
 body { 
@@ -54,3 +55,4 @@ header, footer, article, nav, div {
   <div id="siteAds">Ads</div>
   <footer id="pageFooter">Footer</footer>
 </body>
+</html>
