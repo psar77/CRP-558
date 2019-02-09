@@ -1,58 +1,67 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<title>CSS Grid Template 1</title>
-<style>
-body { 
-  display: grid;
-  grid-template-areas: 
-    "header header header"
-    "nav article ads"
-    "nav footer footer";
-  grid-template-rows: 80px 1fr 70px;  
-  grid-template-columns: 20% 1fr 15%;
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  height: 100vh;
-  margin: 0;
-  }  
-header, footer, article, nav, div {
-  padding: 1.2em;
-  background: gold;
-  }
-#pageHeader {
-  grid-area: header;
-  }
-#pageFooter {
-  grid-area: footer;
-  }
-#mainArticle { 
-  grid-area: article;      
-  }
-#mainNav { 
-  grid-area: nav; 
-  }
-#siteAds { 
-  grid-area: ads; 
-  } 
-/* Stack the layout on small devices/viewports. */
-@media all and (max-width: 575px) {
-  body { 
-    grid-template-areas: 
-      "header"
-      "article"
-      "ads"
-      "nav"
-      "footer";
-    grid-template-rows: 80px 1fr 70px 1fr 70px;  
-    grid-template-columns: 1fr;
- }
-}
-</style>
+<head>
+  <title>Ex3: QGIS Map</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:850px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="basic page with map/image">
+  <meta name="author" content="P.Sar">
+</head>
+    
 <body>
-  <header id="pageHeader">Header</header>
-  <article id="mainArticle">Article</article>
-  <nav id="mainNav">Nav</nav>
-  <div id="siteAds">Ads</div>
-  <footer id="pageFooter">Footer</footer>
+  <h1>Exercise 3: Introduction to QGIS</h1>
+    
+  <h2>Basic Map-making</h2> 
+  <p1>
+QGIS is a free and open-source GIS and map-making software, equivalent to ESRI's ArcGIS and ArcMap. Below is a basic map of Iowa and different types highway system throughout the state. The map also includes a shapefile layer of Story County, which various kinds of information for further analysis. <br><br>
+ 
+<img src="allmap.png" alt="overall map" style="width:850px;"> <br><br>
+
+The zoom-in map below shows population density per square mile of Story County, as well as the City of Ames. <br><br>
+ 
+<img src="ames.png" alt="overall map" style="width:850px;"> <br><br>
+      
+ <br><br>
+      
+  </p1>
+    
+  <h3>Credits</h3>
+<p2>
+Map Data and Shapefile: ISU GIS Facility<br>Map Drawn by: Panhavuth Sar<br>Date: 02/08/2019
+    
+    
+</p2>
+
 </body>
+  
 </html>
