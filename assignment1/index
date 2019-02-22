@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assignment 1</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:40px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      font-size:25px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:15px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:12px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:850px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    table{background-color:antiquewhite;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+  </style>
+    <script type="text/javascript">
+
+// Length Converter script- By Bruce Zhang
+// For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/
+// Please keep this notice intact
+
+var factors1 = new Array(1, 0.01, 0.00001, 0.00000621, 0.3937, 0.0328, 0.01094);
+var factors2 = new Array(100, 1, 0.001, 0.000621, 39.37, 3.28,  1.094);
+var factors3 = new Array(100000, 1000, 1, 0.621, 39370, 3280, 1094);
+var factors4 = new Array(160934, 1609.34, 1.60934, 1, 63360, 5280,1760);
+var factors5 = new Array(2.54, 0.0254, 0.0000254, 0.0000158, 1, 0.08333, 0.02778);
+var factors6 = new Array(30.48, 0.3048, 0.0003048, 0.0001896, 12, 1, 0.3333);
+var factors7 = new Array(91.44, 0.9144, 0.0009144, 0.0005688, 36, 3, 1);
+var factors = new Array(factors1,factors2,factors3,factors4,factors5,factors6,factors7);
+
+function convert_unit()
+{
+	from_index = document.length_con.from_unit.selectedIndex;
+	to_index = document.length_con.to_unit.selectedIndex;
+	factor = factors[from_index][to_index];
+	document.getElementById("formula").innerHTML = document.length_con.from_unit.options[document.length_con.from_unit.selectedIndex].text + " = " + factor + " " + document.length_con.to_unit.options[document.length_con.to_unit.selectedIndex].text;
+	if(isNaN(document.length_con.from_value.value))
+		document.getElementById("to_value").innerHTML = "Not a valid number.";
+	else
+		document.getElementById("to_value").innerHTML = factor * document.length_con.from_value.value;
+}
+</script>
+  <meta charset="UTF-8">
+  <meta name="description" content="basic page with map/image">
+  <meta name="author" content="P.Sar">
+</head>
+    
+<body>
+  <h1>Assignment 1: Javascript</h1>
+    
+     <h2>Temperature Conversion</h2>
+   
+        <p1>
+            <input id="inputFahrenheit" type="number" placeholder="Fahrenheit" oninput="tempConvert(this.value)" onchange="tempConvert(this.value)">
+            
+            is equal to
+            
+            <u><b><span id="outputCelcius"></span></b></u> Celcius
+            
+            <script>
+            function tempConvert(valNum) {
+                valNum = parseFloat(valNum);
+                document.getElementById("outputCelcius").innerHTML = (valNum-32)/1.8;
+            }
+            </script>
+
+        </p1>
+     <h2>Array</h2> 
+    
+    <button onclick="myFunction1()">Sort Alphabetically</button>
+    <button onclick="myFunction2()">Sort Numerically</button>
+
+<p id="demo"></p>
+
+<script>
+    var points = [15,+" "+68,+" "+12,+" "+35,+" "+7,+" "+54,+" "+25,+" "+35,+" "+47,];
+    document.getElementById("demo").innerHTML = points;
+
+    function myFunction1() {
+  points.sort();
+  document.getElementById("demo").innerHTML = points;
+}
+
+    function myFunction2() {
+  points.sort(function(a, b){return a - b});
+  document.getElementById("demo").innerHTML = points;
+}
+</script>
+    
+<h2>Object</h2>
+    
+    <p id="demo1"></p>
+
+<script>
+// Create an object:
+var person1 = {
+  firstName: "Leo",
+  lastName: "Messi",
+  age: 31,
+  club: "FC Barcelona",
+  pos: "Center Forward"
+};
+    person2 = {
+  firstName: "Cristiano",
+  lastName: "Ronaldo",
+  age: 33,
+  club: "FC Juventus",
+  pos: "Striker"
+};
+    
+// Display some data from the object:
+document.getElementById("demo1").innerHTML =
+person1.firstName + " "+ person1.lastName + " is " + person1.age + " years old, currently playing for " + person1.club + " as a " + person1.pos +"."
+    +"<br><br>" + "Meanwhile, " +
+    person2.firstName + " "+ person2.lastName + " is " + person2.age + " years old, currently playing for " + person2.club + " as a " + person2.pos +".";
+    
+</script>
+
+     <h2>Loop</h2>
+    <p id="demo2"></p>
+
+<script>
+var text = ""
+var i =44;
+
+do {
+  text += "The number starts with " + i +"<br>";
+  i++;
+}
+while (i < 48);  
+
+document.getElementById("demo2").innerHTML = text;
+</script>
+    
+     <h2>Conditions</h2> 
+    
+<button onclick="myFunction3()">Try it</button>
+
+<p id="demo3"></p>
+
+<script>
+function myFunction3() {
+  var greeting;
+  var time = new Date().getHours();
+  if (time < 10) {
+    greeting = "Good morning";
+  } else if (time < 16) {
+    greeting = "Good afternoon";
+  } else if (time < 20) {
+    greeting = "Good evening";
+  } else {
+    greeting = "Good night";
+  }
+  document.getElementById("demo3").innerHTML = greeting;
+}
+</script>
+    
+    <h2>Length Convertor</h2> <br>
+
+
+<p1> <form name="length_con">
+
+<table>
+
+	<tr>
+		<td>From </td>
+
+		<td>
+			<select name=from_unit onChange="convert_unit()";>
+			<option> centimeters
+			<option> meters
+			<option> kilometers
+			<option> miles
+			<option> inches
+			<option> feet
+			<option> yards
+			</select>
+
+		</td>
+		<td>  To </td>
+		<td>
+			<select name=to_unit onChange="convert_unit()";>
+			<option> centimeters
+			<option> meters
+			<option> kilometers
+			<option> miles
+			<option> inches
+			<option> feet
+			<option> yards
+			</select>
+
+		</td>
+	</tr>
+	<tr>
+		<td> </td><td colspan="3"><div id="formula">centimeters = 1 centimeters</div></td>
+	</tr>
+
+	<tr>
+		<td colspan="4"> </td>
+	</tr>
+
+	<tr>
+		<td>Enter </td>
+		<td><input type="text" name="from_value" value="1" size="12" maxlength="12"></td>
+		<td> <input type=button value="To" onClick="convert_unit()";> </td>
+		<td><div id="to_value">1</div></td>
+	</tr>
+
+	
+
+</table>
+
+</form>
+    </p1>
+    
+        
+  <h3>Credits</h3>
+<p2>
+<tr>
+		Length Converter script - by <a href="http://javascriptkit.com/script/script2/lengthconverter.shtml">Bruce Zhang</a><br />
+<a href="http://www.javascriptkit.com">JavaScript Kit</a><br>
+<a href="https://www.w3schools.com/">w3schools</a><br><br></div></td></tr>
+    
+    
+</p2>
+
+</body>
+  
+</html>
