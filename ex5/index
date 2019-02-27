@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html><head><meta name="robots" content="noindex">
+
+
+  <title>Ex5: Leaflet Map</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:850px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="basic Leaflet Map">
+  <meta name="author" content="P.Sar">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"><script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script><script src="https://code.jquery.com/jquery-3.0.0.js"></script><style id="jsbin-css">
+#map {
+     width: 500px;
+     height: 400px;
+     /* background-color: green; */
+}
+</style></head>
+	
+ 
+	
+
+
+	
+
+
+<body>
+  
+  <h1>Exercise 5: Leaflet Map</h1>
+  <h2>Getting Started Exercise</h2>
+  <p1>
+<div id="map" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" role="presentation" src="http://b.tile.osm.org/6/50/29.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(131px, 48px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://a.tile.osm.org/6/50/28.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(131px, -208px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://a.tile.osm.org/6/49/29.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-125px, 48px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://c.tile.osm.org/6/51/29.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(387px, 48px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://c.tile.osm.org/6/50/30.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(131px, 304px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://c.tile.osm.org/6/49/28.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-125px, -208px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://b.tile.osm.org/6/51/28.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(387px, -208px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://b.tile.osm.org/6/49/30.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-125px, 304px, 0px); opacity: 1;"><img alt="" role="presentation" src="http://a.tile.osm.org/6/51/30.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(387px, 304px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-shadow-pane"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(298px, 286px, 0px);"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(234px, 330px, 0px);"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(298px, 286px, 0px);"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(250px, 200px, 0px);"></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-marker-pane"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(298px, 286px, 0px); z-index: 286;"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(234px, 330px, 0px); z-index: 330;"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(298px, 286px, 0px); z-index: 286;"><img src="https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(250px, 200px, 0px); z-index: 200; outline: none;"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(12919.1px, 7575.95px, 0px) scale(32);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in">+</a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out">−</a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | © <a href="http://osm.org/copyright">OpenStreetMap</a> contributors</div></div></div></div>
+	<br>
+	Pan to <a href="javascript:beach()">My Place Favorite to Visit</a><br>
+	
+	<a href="#" id="zoomOut">Zoom to Overall Cambodia</a><br>
+
+	<button id="angkor">Visit Angkor Wat</button>
+  </p1>
+ <br><br>
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap &amp; Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 02/26/2019
+    
+<br><br>    
+</p2>
+<script id="jsbin-javascript">
+var map = L.map('map').setView([11.5682710,104.9224426], 12);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([11.5682710, 104.9224426]).addTo(map)
+            .bindPopup("My Hometown: Phnom Penh, Cambodia")
+            .openPopup();
+
+
+
+
+//----------Adding multiple town markers----------
+
+//a array list of towns
+var towns = [
+	[10.6220485, 103.5223365, "Sihanouk Ville Province"],
+	[11.5682710, 104.9224426, "Capital City: Phnom Penh"],
+	[13.4121, 103.8659, "Angkor Wat, Siem Riep Province"]
+];
+
+//loop through the array and add a marker for each
+for (var i = 0; i < towns.length; i++) {
+	marker = new L.marker([towns[i][0],towns[i][1]])
+	.bindPopup(towns[i][2])
+	.addTo(map);
+}
+
+
+//----------Links below the Map----------
+
+//Pan to beach
+function beach() {
+	map.panTo(new L.LatLng(10.6220485, 103.5223365));
+}
+
+//set Zoom
+$("#zoomOut").click(function(){
+	map.setZoom(6);
+});
+
+
+//Goldfield Iowa
+$("#angkor").click(function(){
+	map.setView(new L.LatLng(13.4121, 103.8659), 14);
+});
+</script>
+
+</body></html>
