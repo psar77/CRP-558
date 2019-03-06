@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html>
@@ -29,7 +28,7 @@
       font-style: italic}
     
     body{background-color:#e7e7e7;
-        width:850px;
+        width:600px;
         text-align: center;
         vertical-align: middle;
         margin: auto}
@@ -40,7 +39,7 @@
   <meta charset="UTF-8">
   <meta name="description" content="basic Leaflet Map">
   <meta name="author" content="P.Sar">
-</head>
+
 	
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 	
@@ -58,22 +57,38 @@
 <body>
   
   <h1>Assignment 2</h1>
-  <h2>Leaflet Playground</h2><br>
+  <h2>Leaflet Playground</h2>
   <p1>
+    For this Assignment 2, I used the map from the previous assignment as a base for my experimentations. The three cities shown in the map are the few primary locations of Cambodia, but they are personally special to me as well. The capital city is my hometown, so it is the place I spent most of my life in so far. The two other cities are where I usually visited with my family and friends, and they are also pretty popular tourist destinations.<br><br>
+    
+    I used a unique type of marker for these main city locations to distingiush them from the randomly-generated ones. These unique markers also contain the link to the city's official website and its external Google satelite
+imagery. On top of the 10 Random Markers, I also included the getZoom function for the current zoom level. Finally, I added the refresh button which will bring up the altert popup window asking for confirmation of reloading the current page.<br><br>
+    
+    
 <div id='map'></div>
 	<br>
 	
 	
 	<a href="#" id='zoomOut'>Zoom to Overall Cambodia</a><br><br>
-
-	<button type="button" id="randomMarkers">10 Random Markers</button>
     
-    <button id="angkor">Visit My Hometown</button>
+    <button type="button" id="getZoom">Get Zoom</button> The Zoom Level is <b><span id="theZoom">-</span></b><br><br>
+    
+  <button id="PP">Visit The Capital City</button>
+    
+  <button id="SV">Visit The Beach City</button> 
+    
+  <button id="SR">Visit The Temple City</button> <br><br>
+    
+  <button type="button" id="randomMarkers">10 Random Markers</button>
+    
+  <button id="reload">Reload page</button>
+
+  
   </p1>
  <br><br>
  <h3>Credits</h3> 
   <p2>
-Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 02/28/2019
+Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 03/05/2019
     
 <br><br>    
 </p2>
@@ -89,47 +104,54 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 var customIcon = L.icon({
     iconUrl: 'https://openclipart.org/download/177826/color-icons-green-home.svg',
 
+  
     iconSize:     [30], 
-    iconAnchor:   [10, 34],
-    popupAnchor:  [6,-34]
+    iconAnchor:   [15, 44],
+    popupAnchor:  [-5,-44]
 });
 
 var customIcon1 = L.icon({
     iconUrl: 'https://cdn2.iconfinder.com/data/icons/country-flag-2/128/Cambodia_Flag-512.png',
 
     iconSize:     [60], 
-    iconAnchor:   [23, 34],
-    popupAnchor:  [6,-34]
+    iconAnchor:   [30, 54],
+    popupAnchor:  [0,-54]
 });         
-
+ 
 
 //----------Adding multiple town markers----------
 
-//a array list of towns
-var towns = [
-	[10.6220485, 103.5223365, "<b>Sihanouk Ville Province</b>"],	
-	[13.4121, 103.8659, "<b>Angkor Wat, Siem Riep Province</b>"],
-  [11.5682710, 104.9224426, "<b>Capital City: Phnom Penh</b><br><a href='https://lh6.googleusercontent.com/N4BIJdEuktMv2jQ4tnWaxYJ9eDmWxRboSOz6dh5rRqo9UXa75owhjpa4WDJURYV5E_VZ9ietn48YWhswkSjz3glQKLwApk5pRHTurJ7K34yPkKDxlW16dVjosL793dVYO40YJjqK'> <i><u><b>this.</b></u></i> </a>"]
-];
-
-
-
-//loop through the array and add a marker for each
-for (var i = 0; i < towns.length; i++) {
+//array list of towns and their websites and GoogleMap links
+var towns1 = 
+	L.marker([10.634959, 103.502033],{
+  icon: customIcon1,
+  title: "My favorite place to visit."
+  })
+.addTo(map)
+.bindPopup("<b>Sihanouk Ville City</b><br><br><a href='http://sihanoukville.gov.kh/en/' target='_blank'> <u>Official Website SV</u> </a><br><br><a href='https://www.google.com/maps/place/Sihanoukville,+Cambodia/@10.9175029,103.6262672,119061m/data=!3m1!1e3!4m5!3m4!1s0x3107e1115d295281:0x699effa4268b5f59!8m2!3d10.7581899!4d103.8216261?hl=en' target='_blank'> <u>Satellite Map SV</b></u> </a>");
   
-	marker = new L.marker([towns[i][0],towns[i][1]], {
-   icon:customIcon1,
-   title: "Major City"})
-	.bindPopup(towns[i][2])
-	.addTo(map);
-}
+var towns2 = 
+	L.marker([13.389271, 103.832315],{
+  icon: customIcon1,
+  title: "The old capital of the great Khmer Empire."
+  })
+.addTo(map)
+.bindPopup("<b>Siem Riep City</b><br><br><a href='https://www.siemreap.net/' target='_blank'> <u>Official Website SR</u> </a><br><br><a href='https://www.google.com/maps/place/Krong+Siem+Reap,+Cambodia/@13.3317992,103.7558622,57601m/data=!3m1!1e3!4m5!3m4!1s0x3110169a8c91a879:0xa940aaf93ee5bbfa!8m2!3d13.3550091!4d103.855173?hl=en' target='_blank'> <u>Satellite Map SR</b></u> </a>");
+
+var towns = L.marker([11.576091, 104.917043],{
+  icon: customIcon1,
+  title: "The place where I was born and raised."
+  })
+.addTo(map)
+.bindPopup("<b>Capital City Phnom Penh</b><br><br><a href='http://phnompenh.gov.kh/en/' target='_blank'> <u>Official Website PP</u> </a><br><br><a href='https://www.google.com/maps/place/Phnom+Penh,+Cambodia/@11.5746169,104.7781876,57096m/data=!3m1!1e3!4m5!3m4!1s0x3109513dc76a6be3:0x9c010ee85ab525bb!8m2!3d11.5563738!4d104.9282099?hl=en' target='_blank'> <u>Satellite Map PP</b></u> </a>")
+.openPopup();
 
 
 var marker = L.marker([11.625231, 104.925510], {
   icon: customIcon,
-	draggable: false,
-	title: "The house I grew up in.",
-	opacity: 1
+	title: "The second house I grew up in.",
+	//draggable: true,
+  opacity: 1
 }).addTo(map)
   .bindPopup("My House");
  
@@ -145,8 +167,8 @@ function beach() {
 //set Zoom
 $("#zoomOut").click(function(){
 	map.setZoom(7);
+  ;
 });
-
 
 $('#randomMarkers').click(function () {
 	// Add a 10 random markers
@@ -156,29 +178,66 @@ var minY = 10.5;
 var maxX = 103;
 var minX = 107;
 var markerArray = [];
-var marker1 = L.marker();
+var marker = L.marker();
 for(var i = 0; i < 10; i++){
 	y = Math.random() * (maxY - minY) + minY;
 	x = Math.random() * (maxX - minX) + minX;
 	//console.log(y+' '+x);
-	markerArray.push(L.marker([y,x]));  			 
+  	markerArray.push(L.marker([y,x],{
+      draggable: true,
+      title: "Drag it as you like."})); 			 
     }
-	var group = L.featureGroup(markerArray).addTo(map);
+	var group = L.featureGroup(markerArray).addTo(map)
+  .bindPopup('LatLng: ' + marker.getLatLng()).openPopup();
+  //I HAVE NO IDEA WHY LAT AND LONG DOES NOT SHOW UP IN THE POPUP HERE.
     map.fitBounds(group.getBounds());
   });
+ 
 
-
-$('#clearMarkers').click(function(){
-  //alert("I clicked clear");
-  //map = L.map('map').setView([11.58999,104.918], 12);
-  map.removeLayer(group); 
-});
-
+//Get Curret Zoom Level
+$('#getZoom').click(function () {
+        x = map.getZoom();
+        $('#theZoom').html(x);
+    });
 
 //Zoom back to PP
-$("#angkor").click(function(){
+$("#PP").click(function(){
 	map.setView(new L.LatLng(11.6,104.918), 12);
+    towns.openPopup();
+ });
+
+  //Zoom to SihanoukVille
+$("#SV").click(function(){
+	map.setView(new L.LatLng(10.6220485, 103.5223365), 13);
+    towns1.openPopup();
 });
+
+//Zoom to Siem Reap
+$("#SR").click(function(){
+	map.setView(new L.LatLng(13.4121, 103.8659), 13);
+   towns2.openPopup();
+});
+
+
+//Page Reload
+$("#reload").click(function reload()
+{
+    var r=confirm("\nThis page will reload to its original state!\n\nAre you okay with reloading the page?");
+    if (r)
+    {
+        //write reload OR also load to another URL
+        window.location.reload();
+    }
+    else
+   {
+        //do nothing
+    }
+});
+
+
+
+
+
 </script>
 </body>
 </html>
