@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Assignment2</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:850px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="basic Leaflet Map">
+  <meta name="author" content="P.Sar">
+</head>
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+	
+<style id="jsbin-css">
+#map {
+     width: 600px;
+     height: 500px;
+     /* background-color: green; */
+}
+</style>
+</head>
+<body>
+  
+  <h1>Assignment 2</h1>
+  <h2>Leaflet Playground</h2><br>
+  <p1>
+<div id='map'></div>
+	<br>
+	
+	
+	<a href="#" id='zoomOut'>Zoom to Overall Cambodia</a><br><br>
+
+	<button type="button" id="randomMarkers">10 Random Markers</button>
+    
+    <button id="angkor">Visit My Hometown</button>
+  </p1>
+ <br><br>
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 02/28/2019
+    
+<br><br>    
+</p2>
+<script id="jsbin-javascript">
+var map = L.map('map').setView([11.58999,104.918], 12);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+
+//customIcons for My House and the cities
+var customIcon = L.icon({
+    iconUrl: 'https://openclipart.org/download/177826/color-icons-green-home.svg',
+
+    iconSize:     [30], 
+    iconAnchor:   [10, 34],
+    popupAnchor:  [6,-34]
+});
+
+var customIcon1 = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/country-flag-2/128/Cambodia_Flag-512.png',
+
+    iconSize:     [60], 
+    iconAnchor:   [23, 34],
+    popupAnchor:  [6,-34]
+});         
+
+
+//----------Adding multiple town markers----------
+
+//a array list of towns
+var towns = [
+	[10.6220485, 103.5223365, "<b>Sihanouk Ville Province</b>"],	
+	[13.4121, 103.8659, "<b>Angkor Wat, Siem Riep Province</b>"],
+  [11.5682710, 104.9224426, "<b>Capital City: Phnom Penh</b><br><a href='https://lh6.googleusercontent.com/N4BIJdEuktMv2jQ4tnWaxYJ9eDmWxRboSOz6dh5rRqo9UXa75owhjpa4WDJURYV5E_VZ9ietn48YWhswkSjz3glQKLwApk5pRHTurJ7K34yPkKDxlW16dVjosL793dVYO40YJjqK'> <i><u><b>this.</b></u></i> </a>"]
+];
+
+
+
+//loop through the array and add a marker for each
+for (var i = 0; i < towns.length; i++) {
+  
+	marker = new L.marker([towns[i][0],towns[i][1]], {
+   icon:customIcon1,
+   title: "Major City"})
+	.bindPopup(towns[i][2])
+	.addTo(map);
+}
+
+
+var marker = L.marker([11.625231, 104.925510], {
+  icon: customIcon,
+	draggable: false,
+	title: "The house I grew up in.",
+	opacity: 1
+}).addTo(map)
+  .bindPopup("My House");
+ 
+
+
+//----------Links below the Map----------
+
+//Pan to beach
+function beach() {
+	map.panTo(new L.LatLng(10.6220485, 103.5223365));
+}
+
+//set Zoom
+$("#zoomOut").click(function(){
+	map.setZoom(7);
+});
+
+
+$('#randomMarkers').click(function () {
+	// Add a 10 random markers
+var markers = L.featureGroup();
+var maxY = 14;
+var minY = 10.5;
+var maxX = 103;
+var minX = 107;
+var markerArray = [];
+var marker1 = L.marker();
+for(var i = 0; i < 10; i++){
+	y = Math.random() * (maxY - minY) + minY;
+	x = Math.random() * (maxX - minX) + minX;
+	//console.log(y+' '+x);
+	markerArray.push(L.marker([y,x]));  			 
+    }
+	var group = L.featureGroup(markerArray).addTo(map);
+    map.fitBounds(group.getBounds());
+  });
+
+
+$('#clearMarkers').click(function(){
+  //alert("I clicked clear");
+  //map = L.map('map').setView([11.58999,104.918], 12);
+  map.removeLayer(group); 
+});
+
+
+//Zoom back to PP
+$("#angkor").click(function(){
+	map.setView(new L.LatLng(11.6,104.918), 12);
+});
+</script>
+</body>
+</html>
