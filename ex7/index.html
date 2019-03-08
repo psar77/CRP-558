@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Ex7:Layers/Groups</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:800px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:800px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="EX7">
+  <meta name="author" content="P.Sar">
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+	
+<style id="jsbin-css">
+#map {
+     width: 800px;
+     height: 600px;
+     /* background-color: green; */
+}
+</style>
+</head>
+<body>
+  
+  <h1>Exercise 7</h1>
+  <h2>Map Layers and Groups</h2>
+  <p1>
+ 
+  <body1>  
+<div id='map'></div>
+	<br>
+    </body1>
+	
+	<a href="#" id='zoomOut'>Zoom to Overall Cambodia</a><br><br>
+    
+    
+  <button id="PP">Visit The Capital City</button>
+    
+  <button id="SV">Visit The Beach City</button> 
+    
+  <button id="SR">Visit The Temple City</button> <br><br>
+   
+  <button id="reload">Reload page</button>
+
+  
+  </p1>
+ <br><br>
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 03/05/2019
+    
+<br><br>    
+</p2>
+<script id="jsbin-javascript">
+console.clear();
+
+//base map layers
+var OSM =
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        //maxZoom: 18
+    });
+
+var Esri_WI = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+var TopoColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: 'abcd',
+    minZoom: 0,
+    maxZoom: 18,
+    ext: 'png'
+});
+
+var Esri_Terrain = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+    //maxZoom: 13
+});
+
+
+
+//creation of map
+var map = L.map('map', {
+    center: new L.LatLng(12.15, 104.918),
+    zoom: 7,
+    layers: OSM
+});
+
+//Layers & boundary stuff
+var Admin = L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/adminb/webmercator/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var c1 =
+    L.circle([11.598309, 104.895005], {
+        radius: 900,
+        fill: true, //could be false
+        color: 'green', //the outline color
+        fillColor: 'lightgreen',
+        fillOpacity: 0.7 //this represents 80%
+    })
+    .bindPopup("New Development: CamKo City")
+    //.addTo(map);
+
+var c2 =
+    L.circle([11.628211, 104.870740], {
+        radius: 1600,
+        fill: true, //could be false
+        color: 'blue', //the outline color
+        fillColor: 'lightblue',
+        fillOpacity: 0.7 //this represents 80%
+    })
+    .bindPopup("New Development: Grand International Satellite City")
+    //.addTo(map);
+
+var latlngs = [
+    [11.557759, 104.939675],
+    [11.558195, 104.940613],
+    [11.558121, 104.941814],
+    [11.557637, 104.943274],
+    [11.556734, 104.944194],
+    [11.555503, 104.944873],
+    [11.549730, 104.944745],
+    [11.548059, 104.944051],
+    [11.546683, 104.943184],
+    [11.545117, 104.941803],
+    [11.543878, 104.939877],
+    [11.542910, 104.937415],
+    [11.542342, 104.934552],
+    [11.542563, 104.933932],
+    [11.545816, 104.934681],
+    [11.547195, 104.935450],
+    [11.547195, 104.935450],
+    [11.549688, 104.937876],
+    [11.551246, 104.939073],
+    [11.552660, 104.939632],
+    [11.554322, 104.939663],
+    [11.557728, 104.939604],
+];
+var polygon = L.polygon(latlngs, {
+        color: 'red',
+        opacity: 1
+    })
+    .bindPopup("New Development: Koh Pich Island")
+    //.addTo(map);
+
+
+
+//customIcons for My House and the cities
+
+var customIcon = L.icon({
+    iconUrl: 'https://openclipart.org/download/177826/color-icons-green-home.svg',
+    iconSize: [30],
+    iconAnchor: [15, 44],
+    popupAnchor: [-5, -44]
+});
+
+var customIcon1 = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/country-flag-2/128/Cambodia_Flag-512.png',
+    iconSize: [60],
+    iconAnchor: [28, 57],
+    popupAnchor: [-5, -44] 
+});
+
+var customIcon2 = L.icon({
+    iconUrl: 'https://cdn0.iconfinder.com/data/icons/flat-world-flags/128/Cambodia_Flag_Map_County_Pin_National-512.png',
+    iconSize: [50],
+    iconAnchor: [25, 51],
+    popupAnchor: [0, -44]
+});
+
+var customIcon3 = L.icon({
+    iconUrl: 'https://cdn3.iconfinder.com/data/icons/flat-greyscaleworld-flags/128/Cambodia_Flag_Map_County_Pin_National-512.png',
+    iconSize: [40],
+    iconAnchor: [20, 39],
+    popupAnchor: [0, -40]
+});
+
+
+
+//----------Adding "Major Cities" markers----------
+
+//array list of cities and their websites and GoogleMap links
+var SV =
+    L.marker([10.634959, 103.502033], {
+        icon: customIcon1,
+        title: "My favorite place to visit."
+    })
+    //.addTo(map)
+    .bindPopup("<b>Sihanouk Ville City</b><br><br><a href='http://sihanoukville.gov.kh/en/' target='_blank'> <u>Official Website SV</u> </a><br><br><a href='https://www.google.com/maps/place/Sihanoukville,+Cambodia/@10.9175029,103.6262672,119061m/data=!3m1!1e3!4m5!3m4!1s0x3107e1115d295281:0x699effa4268b5f59!8m2!3d10.7581899!4d103.8216261?hl=en' target='_blank'> <u>Satellite Map SV</b></u> </a>");
+
+var SR =
+    L.marker([13.389271, 103.832315], {
+        icon: customIcon1,
+        title: "The old capital of the great Khmer Empire."
+    })
+    //.addTo(map)
+    .bindPopup("<b>Siem Riep City</b><br><br><a href='https://www.siemreap.net/' target='_blank'> <u>Official Website SR</u> </a><br><br><a href='https://www.google.com/maps/place/Krong+Siem+Reap,+Cambodia/@13.3317992,103.7558622,57601m/data=!3m1!1e3!4m5!3m4!1s0x3110169a8c91a879:0xa940aaf93ee5bbfa!8m2!3d13.3550091!4d103.855173?hl=en' target='_blank'> <u>Satellite Map SR</b></u> </a>");
+
+var PP = L.marker([11.576091, 104.917043], {
+        icon: customIcon1,
+        title: "The place where I was born and raised."
+    })
+    //.addTo(map)
+    .bindPopup("<b>Capital City Phnom Penh</b><br><br><a href='http://phnompenh.gov.kh/en/' target='_blank'> <u>Official Website PP</u> </a><br><br><a href='https://www.google.com/maps/place/Phnom+Penh,+Cambodia/@11.5746169,104.7781876,57096m/data=!3m1!1e3!4m5!3m4!1s0x3109513dc76a6be3:0x9c010ee85ab525bb!8m2!3d11.5563738!4d104.9282099?hl=en' target='_blank'> <u>Satellite Map PP</b></u> </a>")
+    //.openPopup();
+
+
+//----------Adding other cities markers----------
+
+//array list of cities and their provinces
+var BM = L.marker([13.610041, 102.962000], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Serei Sophoan</b><br><br>Province: <b>Banteay Meanchey");
+
+var BB = L.marker([13.090274, 103.199109], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Battambang</b><br><br>Province: <b>Battambang");
+
+var KC = L.marker([11.994409, 105.460491], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Kampong Cham</b><br><br>Province: <b>Kampong Cham");
+
+var KN = L.marker([12.236924, 104.670829], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Kampong Chhnang</b><br><br>Province: <b>Kampong Chhnang");
+
+var KS = L.marker([11.457894, 104.520439], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Chbar Mon</b><br><br>Province: <b>Kampong Speu");
+
+var KT = L.marker([12.700327, 104.888713], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Stueng Saen</b><br><br>Province: <b>Kampong Thom");
+
+var KM = L.marker([10.602614, 104.180779], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Kampot</b><br><br>Province: <b>Kampot");
+
+var KD = L.marker([11.491046, 104.943760], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Ta Khmau</b><br><br>Province: <b>Kandal");
+
+var KK = L.marker([11.615966, 102.982203], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Khemarak Phoumin</b><br><br>Province: <b>Koh Kong");
+
+var KP = L.marker([10.484574, 104.321343], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Kep</b><br><br>Province: <b>Kep");
+
+var KR = L.marker([12.494987, 106.029552], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Kratie</b><br><br>Province: <b>Kratie");
+
+var MK = L.marker([12.463789, 107.178735], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Senmonorom</b><br><br>Province: <b>Mondulkiri");
+
+var OM = L.marker([14.184925, 103.510521], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Samraong</b><br><br>Province: <b>Oddar Meanchey");
+
+var PL = L.marker([12.855947, 102.609687], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Pailin</b><br><br>Province: <b>Pailin");
+
+var PH = L.marker([13.791535, 104.982968], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Tbaeng Meanchey</b><br><br>Province: <b>Preah Vihear");
+
+var PS = L.marker([12.542500, 103.919402], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Pursat</b><br><br>Province: <b>Pursat");
+
+var PV = L.marker([11.495446, 105.335926], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Prey Veng</b><br><br>Province: <b>Prey Veng");
+
+var RK = L.marker([13.739269, 106.990703], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Banlung</b><br><br>Province: <b>Ratanakiri");
+
+var ST = L.marker([13.531255, 105.973014], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Stung Treng</b><br><br>Province: <b>Stung Treng");
+
+var SE = L.marker([11.082002, 105.804997], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Svay Rieng</b><br><br>Province: <b>Svay Rieng");
+
+var TK = L.marker([10.990677, 104.783839], {
+        icon: customIcon2
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Doun Kaev</b><br><br>Province: <b>Takeo");
+
+var TB = L.marker([11.916015, 105.651019], {
+        icon: customIcon3
+    })
+    //.addTo(map)
+    .bindPopup("City: <b>Suong</b><br><br>Province: <b>Tbong Khmum");
+
+
+
+//Welcome to my house
+var house = L.marker([11.625231, 104.925510], {
+        icon: customIcon,
+        title: "Where I come from.",
+        //draggable: true,
+        opacity: 1
+    }).addTo(map)
+    .bindPopup("My House")
+    //.openPopup();   
+
+
+
+//----------Links below the Map----------
+
+//set Zoom
+$("#zoomOut").click(function() {
+    map.setZoom(7);;
+});
+
+
+//Zoom back to PP
+$("#PP").click(function() {
+    map.setView(new L.LatLng(11.6, 104.918), 12);
+    //PP.addTo(map)
+    //PP.openPopup();
+});
+
+//Zoom to SihanoukVille
+$("#SV").click(function() {
+    map.setView(new L.LatLng(10.6220485, 103.5223365), 13);
+    //SV.openPopup();
+});
+
+//Zoom to Siem Reap
+$("#SR").click(function() {
+    map.setView(new L.LatLng(13.4121, 103.8659), 13);
+    //SR.openPopup();
+});
+
+//Page Reload
+$("#reload").click(function reload() {
+    var r = confirm("\nThis page will reload to its original state!\n\nAre you okay with reloading the page?");
+    if (r) {
+        //write reload OR also load to another URL
+        window.location.reload();
+    } else {
+        //do nothing
+    }
+});
+
+var city1 = L.layerGroup([PP, SR, SV]);
+var city2 = L.layerGroup([BB, KK, SE, BM, KD, TK, KM, KC]);
+var city3 = L.layerGroup([KN, KS, KT, KP, KT, MK, OM, PL, PH, PS, PV, RK, ST, TB])
+
+var dePP = L.layerGroup([c1, c2, polygon])
+
+//layer control
+var baseMaps = {
+    "OpenStreetMap": OSM,
+    "Esri World Imagery": Esri_WI,
+    "Color Terrain": TopoColor,
+    "Black and White Terrain": Esri_Terrain,
+};
+
+var overlayMaps = {
+    "My Home": house,
+    "Major Cities": city1,
+    "Secondary Cities": city2,
+    "Minor Cities": city3,
+    "Administrative Boundary": Admin,
+    "Major Development in Phnom Penh": dePP,
+
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+
+</script>
+</body>
+</html>
