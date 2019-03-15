@@ -1,5 +1,13 @@
 
 <!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/pavusel/30/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
 
 <html>
 <head>
@@ -94,7 +102,7 @@
   <h1>Exercise 8</h1>
   <h2>GeoJSON and Leaflet Map</h2>
   <p1>
-  In this assignment, I downloaded a shapefile that contains all the provinces in Cambodia as polygons. I then included the population of 2008 and of 2018 in the attribute table. For the sake of simplicity, I only visualized the population of 2018, categorizing from 100,000 to 1,500,000 people, in the map below.
+ In this assignment, I downloaded a shapefile that contains all the provinces in Cambodia as polygons. I then included the population of 2008 and of 2018 in the attribute table. For the sake of simplicity, I only visualized the population of 2018, categorizing from 100,000 to 1,500,000 people, in the map below.
     <br><br>
   <body1>  
 <div id='map'></div>
@@ -128,7 +136,7 @@ function getColor(d) {
    d <= 500000 ? "#e6c300" :
     d <= 1000000 ? "#b39800" :
     d <= 1500000 ? "#806c00"  :
-    "darkgold"; //white
+    "#4f4200"; //white
 }
  
 function style(feature) {
@@ -167,8 +175,8 @@ var legend = L.control({
 legend.onAdd = function(map) {
 
   var div = L.DomUtil.create('div', 'info legend'),
-    Pop2018 = [100000, 250000, 500000, 1000000, 1500000],
-    labels = ['100,000 and Below', '250,000 to 500,000', '500,000 to 1,000,000','1,000,000 to 1,500,000', '1,500,000 and Above'];
+    Pop2018 = [100000, 250000, 500000, 1000000, 1500000, 1800000],
+    labels = ['100,000 and Below','100,000 to 250,000', '250,000 to 500,000', '500,000 to 1,000,000','1,000,000 to 1,500,000', '1,500,000 and Above'];
 
 	
 	//console.log(feature.length);
