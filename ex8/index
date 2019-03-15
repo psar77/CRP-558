@@ -1,1 +1,193 @@
-123
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Ex8:JSON/GeoJSON</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:800px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:800px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="EX8">
+  <meta name="author" content="P.Sar">
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+  <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+	
+<style id="jsbin-css">
+#map {
+     width: 600px;
+     height: 500px;
+     /* background-color: green; */
+}
+
+.legend {
+    line-height: 11px;
+    color: #555;
+   }
+
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+</style>
+</head>
+<body>
+  
+  <h1>Exercise 8</h1>
+  <h2>GeoJSON and Leaflet Map</h2>
+  <p1>
+ 
+  <body1>  
+<div id='map'></div>
+	<br>
+    </body1>
+  
+  </p1>
+
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 03/14/2019
+    
+<br><br><br>   
+</p2>
+<script id="jsbin-javascript">
+console.clear();
+
+var map = L.map('map').setView([12.5,105], 7);
+
+// add an OpenStreetMap tile layer
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18
+}).addTo(map);
+
+
+//set color of marker
+function getColor(d) {
+  return d <= 100000 ? "#fff099" :
+    d <= 250000 ? "#ffe033" :
+   d <= 500000 ? "#e6c300" :
+    d <= 1000000 ? "#b39800" :
+    d <= 1500000 ? "#806c00"  :
+    "darkgold"; //white
+}
+ 
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.Pop2018),
+        weight: 1.5,
+        opacity: .75,
+        color: 'red',
+        dashArray: '2',
+        fillOpacity: 0.85
+    };
+}
+ 
+
+//This is my own shapefile which I uploaded to GitHub as GeoJSON.
+url = "https://raw.githubusercontent.com/psar77/CRP-558/master/ex8/province.geojson";
+
+
+var geojsonLayer = new L.GeoJSON.AJAX(url , {
+	style: style,
+	onEachFeature: function (feature, layer) {
+        htmlText = "Province/City: " + "<strong>" + feature.properties.Name+ "</strong><br>Population 2008: <b>"  + feature.properties.Pop2008 + "</b><br>Population 2018: <b>"  + feature.properties.Pop2018;
+        layer.bindPopup(htmlText);
+		layer.bindTooltip(feature.properties.Name);
+    }
+}).addTo(map);
+
+
+	
+//Create Legend
+var legend = L.control({
+  position: 'bottomright'
+	//Possible values are 'topleft', 'topright', 'bottomleft' or 'bottomright'
+});
+
+legend.onAdd = function(map) {
+
+  var div = L.DomUtil.create('div', 'info legend'),
+    Pop2018 = [100000, 250000, 500000, 1000000, 1500000],
+    labels = ['100,000 and Below', '250,000 to 500,000', '500,000 to 1,000,000','1,000,000 to 1,500,000', '1,500,000 and Above'];
+
+	
+	//console.log(feature.length);
+	
+	 div.innerHTML += "<b>Population 2018</b><br>";
+  // loop through items and generate a label with a colored square for each
+  for (var i = 0; i < Pop2018.length; i++) {
+    div.innerHTML +=
+      '<i style="background:' + getColor(Pop2018[i]) + ' "></i> ' +
+      ' '+ labels[i]+'<br>';
+  }
+
+  return div;
+};
+legend.addTo(map);
+
+
+
+
+
+</script>
+</body>
+</html>
