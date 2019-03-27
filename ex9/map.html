@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/pavusel/33/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <title>Ex9:Highmap</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:600px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:600px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ex9a">
+  <meta name="author" content="P.Sar">
+	
+
+	
+<style id="jsbin-css">
+#map {
+     width: 600px;
+     height: 500px;
+     /* background-color: green; */
+}
+
+.legend {
+    line-height: 11px;
+    color: #555;
+   }
+
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.container {
+    height: 500px;
+    min-width: 300px;
+    max-width: 800px;
+    margin: 0 auto; 
+}
+
+</style>
+</head>
+<body>
+  
+  <h1>Exercise 9</h1>
+  <h2>Highmap Demos</h2>
+  <p1>
+ 
+    <br>
+  <body1> 
+    
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/pattern-fill.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/us/us-all.js"></script>
+
+<div id="container"></div>
+	<br>
+        
+
+    </body1>
+  
+  </p1>
+
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script:  <a href= "https://www.highcharts.com/maps/demo/pattern-fill-map"> <i><u><b>Highmaps</b></u></i> </a><br>Map Drawn by: Panhavuth Sar<br>Date: 03/26/2019
+    
+<br><br><br>   
+</p2>
+<script id="jsbin-javascript">
+
+// We use a darker border for some states
+var darkBorderColor = '#ccc';
+
+
+// Define the data, linking flags to each point's color.pattern.image. We
+// specify a smaller border width for the smaller states. For some states we
+// also specify an explicit x/y offset for the images, where the default is
+// not satisfactory. Aspect ratio is provided in series definition, and the
+// width height for each image is calculated automatically based on that and the
+// bounding box of each state.
+var data = [
+    ['Alabama', 'https://cdn.pixabay.com/photo/2016/08/22/19/27/bellingrath-gardens-1612728_960_720.jpg'],
+    ['Alaska', 'http://www.photoshelter.com/img-get/I0000wN.9_HdLuVI/s/900/600/17-8736-Fireweed-and-Mendenhall-glacier.jpg', 1, 10, -10],
+    ['Arizona', 'https://mediadc.brightspotcdn.com/dims4/default/7d380aa/2147483647/strip/true/crop/1060x600+0+0/resize/1060x600!/quality/90/?url=https%3A%2F%2Fmediadc.brightspotcdn.com%2F14%2F14%2Fd2128a384cc782c528bb2231c7b1%2Fistock-701045616.jpg'],
+    ['Arkansas', 'http://photosofarkansas.com/wp-content/uploads/2016/09/Calico-Rock-pano-X-Por2-4-part-12-shots-total-LR.jpg'],
+    ['California', 'https://d36tnp772eyphs.cloudfront.net/blogs/1/2014/05/mammoth-lakes-california-940x606.jpg', 1, null, null, darkBorderColor],
+    ['Colorado', 'http://paperlief.com/images/colorado-landscape-summer-wallpaper-1.jpg'],
+    ['Connecticut', 'https://www.goodfreephotos.com/albums/united-states/connecticut/other-connecticut/landscape-of-the-connecticut-river-and-mount-sugarloaf.jpg', 1],
+    ['Delaware', 'https://llandscapes-ee1.kxcdn.com/wp-content/uploads/2016/03/bombay-hook.jpg', 1],
+    ['Florida', 'https://2.bp.blogspot.com/-x3SxN8zFB84/VtmZddfj-FI/AAAAAAAAADU/fVZPzlu7_OI/s1600/The%2BLandscape%2Bof%2BFlorida.jpg', 1, null, null, darkBorderColor],
+    ['Georgia', 'https://cdn.thecrazytourist.com/wp-content/uploads/2018/06/ccimage-shutterstock_214813114.jpg'],
+    ['Hawaii', 'http://www.youramazingplaces.com/wp-content/uploads/2013/04/ArchitectureArtDesigns5.jpg', 1, null, null, darkBorderColor],
+    ['Idaho', 'https://d36tnp772eyphs.cloudfront.net/blogs/1/2015/06/GaddRay_FrankChurchRiverofNoReturn-Middle-Fork-Salmon762A1755-940x626.jpg'],
+    ['Illinois', 'https://i.pinimg.com/originals/89/f9/56/89f956d9c03016bd63b74ca624a767a6.jpg'],
+    ['Indiana', 'https://assets.saatchiart.com/saatchi/662289/art/2335259/1408399-7.jpg'],
+    ['Iowa', 'https://iowa-photo.com/wp-content/gallery/rural/MW-4-0059-WP.jpg'],
+    ['Kansas', 'https://render.fineartamerica.com/images/rendered/search/print/images-medium-5/windblown-thomas-zimmerman.jpg'],
+    ['Kentucky', 'https://www.goodfreephotos.com/albums/united-states/kentucky/other-kentucky/trail-and-landscape-in-kentucky.jpg'],
+    ['Louisiana', 'https://images.fineartamerica.com/images-medium-large-5/2-usa-louisiana-swamp-landscape-breaux-dosfotos.jpg', 3],
+    ['Maine', 'https://images.fineartamerica.com/images-medium-large-5/coastal-maine-landscape-john-greim.jpg', 2],
+    ['Maryland', 'https://photos.smugmug.com/DailyShoots/2013/06-15/i-sFxbgMH/8/1c2a0915/L/IMG_1160-L.jpg', 1, null, null, darkBorderColor],
+    ['Massachusetts', 'https://s3.amazonaws.com/american-rivers-website/wp-content/uploads/2016/03/24215208/connecticut-river-credit-BenFrantzDale-wikimedia-CC-header.jpg', 1, null, null, darkBorderColor],
+    ['Michigan', 'https://mynorth.com/wp-content/uploads/2017/06/0916_Intern_TaylorBrown_EmpireBluffTrail_20-copy-900x473.jpg', 2],
+    ['Minnesota', 'https://stmedia.stimg.co/ows_141330909234520.jpg?auto=compress&crop=faces&dpr=1&w=525'],
+    ['Mississippi', 'https://photos.smugmug.com/Photography/Minnesota-Photos/i-DVbwb2F/3/38f7440a/L/IMG_2951%20-%20Version%202-L.jpg'],
+    ['Missouri', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/hodgson-mill-landscape-missouri-gregory-ballos.jpg'],
+    ['Montana', 'https://carrollvanwest.files.wordpress.com/2016/04/cropped-img_0085.jpg'],
+    ['Nebraska', 'https://imgc.artprintimages.com/img/print/scenic-view-of-western-nebraska-landscape-along-the-oregon-trail_u-l-p3jxes0.jpg?h=550&w=550'],
+    ['Nevada', 'https://llandscapes-ee1.kxcdn.com/wp-content/uploads/2016/04/valley-of-fire-2.jpg', null, 40],
+    ['New Hampshire', 'https://a.travel-assets.com/findyours-php/viewfinder/images/res60/63000/63731-White-Mountains-Area.jpg', 2],
+    ['New Jersey', 'https://richardlewisphotography.com/wp-content/uploads/2018/10/Pinelands-Batsto-River-Fall-Reflections_20181030_0004-WEB-600x480.jpg', 2],
+    ['New Mexico', 'https://d36tnp772eyphs.cloudfront.net/blogs/1/2016/05/16828-red@redspub.com-3-940x626.jpg'],
+    ['New York', 'https://ae01.alicdn.com/kf/HTB15wdSXjfguuRjSspaq6yXVXXar/new-york-city-hudson-river-lights-landscape-Poster-Silk-Fabric-Print-Wall-Art-Decor-for-living.jpg_640x640.jpg', 2],
+    ['North Carolina', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/blue-ridge-parkway-nc-sunset-north-carolina-mountains-landscape-dave-allen.jpg'],
+    ['North Dakota', 'https://i.pinimg.com/originals/de/b8/51/deb8517c797aba2cdb90479ef1bc43fb.jpg'],
+    ['Ohio', 'https://images.fineartamerica.com/images-medium-large-5/mid-summer-ohio-landscape-amanda-kiplinger.jpg'],
+    ['Oklahoma', 'https://ssl.c.photoshelter.com/img-get2/I0000h0GAi.45COM/fit=1000x750/Moab-8105.jpg'],
+    ['Oregon', 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Central_Oregon_landscape.jpg'],
+    ['Pennsylvania', 'https://images-na.ssl-images-amazon.com/images/I/51oWYStxRkL.jpg'],
+    ['Rhode Island', 'https://sethjacobson.files.wordpress.com/2011/03/sunrise.jpg', 1],
+    ['South Carolina', 'https://llandscapes-ee1.kxcdn.com/wp-content/uploads/2016/07/caesars-head.jpg'],
+    ['South Dakota', 'https://img-aws.ehowcdn.com/560x560p/s3-us-west-1.amazonaws.com/contentlab.studiod/getty/467299716fe94016971100f0bbdab373'],
+    ['Tennessee', 'https://llandscapes-ee1.kxcdn.com/wp-content/uploads/2016/06/cumberland-gap.jpg'],
+    ['Texas', 'https://www.imagesfromtexas.com/images/xl/Davis-Mountains-Sunrise-7.jpg'],
+    ['Utah', 'https://www.southernplainsphotography.com/uploads/2/4/2/1/24210585/delicate_2_orig.jpg'],
+    ['Vermont', 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/vermont-fall-landscape-tim-kirchoff.jpg', 2],
+    ['Virginia', 'https://i.pinimg.com/originals/17/96/29/179629273d8289017504e0e71e2e2f72.jpg', 2],
+    ['Washington', 'http://mcmikephoto.com/wp-content/gallery/landscape/mount-shuksan-picture-lake-mcauliffe-gallery7480.jpg'],
+    ['West Virginia', 'https://consumerenergyalliance.org/cms/wp-content/uploads/2017/11/west-virginia-landscape-696x392.jpg', 2],
+    ['Wisconsin', 'https://llandscapes-ee1.kxcdn.com/wp-content/uploads/2016/07/interstate.jpg'],
+    ['Wyoming', 'https://llandscapes-ee1.kxcdn.com/wp-content/uploads/2016/07/moulton-barn.jpg']
+];
+
+// Create the chart
+Highcharts.mapChart('container', {
+    chart: {
+        map: 'countries/us/us-all'
+    },
+
+    title: {
+        text: 'US state landscapes'
+    },
+
+    subtitle: {
+        text: 'Source: <a href="https://www.google.com/">Google Images</a>'
+    },
+
+    // Add zoom/pan
+    mapNavigation: {
+        enabled: true,
+        enableDoubleClickZoomTo: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+
+    // Limit zoom
+    xAxis: {
+        minRange: 3500
+    },
+
+    // We do not want a legend
+    legend: {
+        enabled: false
+    },
+
+    // Make tooltip show full image
+    tooltip: {
+        useHTML: true,
+        borderColor: '#aaa',
+        headerFormat: '<b>{point.point.name}</b><br>',
+        pointFormat: '<img style="width: 150px; height: 100px;" src=\'{point.options.color.pattern.image}\'>'
+    },
+
+    // Define the series
+    series: [{
+        name: 'State flags',
+        keys: [
+            'name', 'color.pattern.image', 'borderWidth', 'color.pattern.x', 'color.pattern.y', 'borderColor'
+        ],
+        joinBy: 'name',
+        data: data,
+        borderColor: '#fff',
+        color: {
+            pattern: {
+                // This is inherited by the individual pattern definitions for
+                // each point. As long as a width/height for the pattern is not
+                // defined, Highcharts will automatically fill the bounding box
+                // while preserving the aspect ratio defined here. Without an
+                // aspect ratio defined, Highcharts will simply fill the
+                // bounding box with the image, stretching it to fit.
+                aspectRatio: 3 / 2
+            }
+        },
+        states: {
+            hover: {
+                borderColor: '#b44',
+                borderWidth: 2
+            }
+        }
+    }, {
+        /* Separator lines */
+        type: 'mapline',
+        nullColor: '#aaa'
+    }]
+});
+
+</script>
+</body>
+</html>
