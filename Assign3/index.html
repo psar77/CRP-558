@@ -1,1 +1,418 @@
-123
+
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/pavusel/39/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <title>Assignment3</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:800px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:800px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="Assgn3">
+  <meta name="author" content="P.Sar">
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+	
+<style id="jsbin-css">
+#map {
+     width: 800px;
+     height: 600px;
+     /* background-color: green; */
+}
+</style>
+</head>
+<body>
+  
+  <h1>Assignment 3</h1>
+  <h2>Map Layers and Groups</h2>
+  <p1>
+ <img src="MAP.png" alt="Map" width="500" height="333">
+    <br><br>
+  <body1>  
+<div id='map'></div>
+	<br>
+    </body1>
+	
+	
+    
+
+
+  
+  </p1>
+ 
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 03/05/2019
+    
+<br><br>    
+</p2>
+<script id="jsbin-javascript">
+console.clear();
+
+//base map layers OpenStreet Map
+var OSM =
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        //maxZoom: 18
+    });
+
+  //This is the raw satellite imagery
+var Esri_WI = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+  //This is the black and white terrain
+var Esri_Terrain = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+    //maxZoom: 13
+});
+
+
+//creation of map
+var map = L.map('map', {
+    center: new L.LatLng(51.507359, 15),
+    zoom: 4,
+    layers: OSM
+});
+
+//Layers & boundary stuff
+var Admin = L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/adminb/webmercator/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+
+
+
+
+
+//customIcons for My House and the cities
+
+var customSPN = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/major-world-flag-pins/1200/spain_spanish_flag_map_pointer_pin-512.png',
+    iconSize: [30],
+    iconAnchor: [15, 44],
+    popupAnchor: [-5, -44]
+});
+
+var customGER = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/major-world-flag-pins/1200/germany_german_flag_map_pointer_pin-512.png',
+    iconSize: [30],
+    iconAnchor: [15, 44],
+    popupAnchor: [-5, -44]
+});
+
+var customENG = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/major-world-flag-pins/1200/england_english_flag_map_pointer_pin-512.png',
+    iconSize: [30],
+    iconAnchor: [15, 44],
+    popupAnchor: [-5, -44]
+});
+
+var customITA = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/major-world-flag-pins/1200/italy_italian_flag_map_pointer_pin-512.png',
+    iconSize: [30],
+    iconAnchor: [15, 44],
+    popupAnchor: [-5, -44]
+});
+
+var customFRA = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/major-world-flag-pins/1200/france_french_flag_map_pointer_pin-512.png',
+    iconSize: [30],
+    iconAnchor: [15, 44],
+    popupAnchor: [-5, -44]
+});
+
+
+
+var customIcon1 = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/country-flag-2/128/Cambodia_Flag-512.png',
+    iconSize: [60],
+    iconAnchor: [28, 57],
+    popupAnchor: [-5, -44] 
+});
+
+var customIcon2 = L.icon({
+    iconUrl: 'https://cdn0.iconfinder.com/data/icons/flat-world-flags/128/Cambodia_Flag_Map_County_Pin_National-512.png',
+    iconSize: [50],
+    iconAnchor: [25, 51],
+    popupAnchor: [0, -44]
+});
+
+var customIcon3 = L.icon({
+    iconUrl: 'https://cdn3.iconfinder.com/data/icons/flat-greyscaleworld-flags/128/Cambodia_Flag_Map_County_Pin_National-512.png',
+    iconSize: [40],
+    iconAnchor: [20, 39],
+    popupAnchor: [0, -40]
+});
+
+
+//----------Adding Top 10 clubs----------
+
+//array list of teams and their websites and GoogleMap links
+var RMA =
+    L.marker([40.453001, -3.688323], {
+        icon: customSPN,
+        title: "The rich club"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.realmadrid.com/en' target='_blank'><b>Real Madrid FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Santiago+Bernab%C3%A9u+Stadium/@40.4530541,-3.6905332,880m/data=!3m2!1e3!4b1!4m5!3m4!1s0xd4228e23705d39f:0xa8fff6d26e2b1988!8m2!3d40.4530541!4d-3.6883445?hl=en' target='_blank'><b>Santiago Bernabéu</b> </a>")
+    .openPopup();
+
+var BAR =
+    L.marker([41.380831, 2.122823], {
+        icon: customSPN,
+        title: "Tiki-taka"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.fcbarcelona.com/en/' target='_blank'><b>FC Barcelona</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Camp+Nou/@41.3809,2.1206311,867m/data=!3m3!1e3!4b1!5s0x12a498f5c19b248d:0x777ed64ea231a704!4m5!3m4!1s0x12a498f576297baf:0x44f65330fe1b04b9!8m2!3d41.380896!4d2.1228198?hl=en' target='_blank'><b>Camp Nou</b> </a>")
+    .openPopup();
+
+var BAY =
+    L.marker([48.218707, 11.624678], {
+        icon: customGER,
+        title: "One-team league"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://fcbayern.com/en' target='_blank'><b>FC Bayern Munich</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Allianz+Arena/@48.2188033,11.6225185,770m/data=!3m2!1e3!4b1!4m5!3m4!1s0x479e7385128a251f:0xed4d60428e32c423!8m2!3d48.2187997!4d11.6247072?hl=en' target='_blank'><b>Allianz Arena</b> </a>")
+    .openPopup();
+
+var MU =
+    L.marker([53.463001, -2.291400], {
+        icon: customENG,
+        title: "The red devil"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.manutd.com/' target='_blank'><b>Manchester United FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Old+Trafford/@53.4630621,-2.2935288,688m/data=!3m2!1e3!4b1!4m5!3m4!1s0x487bae72e7e47f69:0x6c930e96df4455fe!8m2!3d53.4630589!4d-2.2913401?hl=en' target='_blank'><b>Old Trafford</b> </a>")
+    .openPopup();
+
+var CFC =
+    L.marker([51.481636, -0.190899], {
+        icon: customENG,
+        title: "My fav team!"
+    })
+    .addTo(map)
+    .bindPopup("Club: <a href='https://www.chelseafc.com/en' target='_blank'><b>Chelsea FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Stamford+Bridge/@51.4816663,-0.1931452,720m/data=!3m2!1e3!4b1!4m5!3m4!1s0x48760f864b976f3d:0x48aa38781ea565f8!8m2!3d51.481663!4d-0.1909565?hl=en' target='_blank'><b>Stamford Bridge</b> </a>")
+    //.openPopup();
+
+var JUV =
+    L.marker([45.109508, 7.641264], {
+        icon: customITA,
+        title: "The old lady"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.juventus.com/en/' target='_blank'><b>Juventus FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Allianz+Stadium/@45.1095728,7.6390757,816m/data=!3m2!1e3!4b1!4m5!3m4!1s0x47886c17f7814e37:0xe3be8084a88d8da5!8m2!3d45.109569!4d7.6412644?hl=en' target='_blank'><b>Allianz Stadium</b> </a>")
+    .openPopup();
+
+var MC =
+    L.marker([53.483087, -2.200547], {
+        icon: customENG,
+        title: "Arab money"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='http://www.mancity.com/' target='_blank'><b>Manchester City FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Etihad+Stadium/@53.4831413,-2.202584,688m/data=!3m2!1e3!4b1!4m5!3m4!1s0x487bb10dcc950ae3:0x549a8dcce67a876a!8m2!3d53.4831381!4d-2.2003953?hl=en' target='_blank'><b>Etihad Stadium</b> </a>")
+    .openPopup();
+
+var LIV =
+    L.marker([53.430778, -2.960884], {
+        icon: customENG,
+        title: "YNWA"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.liverpoolfc.com/' target='_blank'><b>Liverpool FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Anfield/@53.4308326,-2.9630187,689m/data=!3m2!1e3!4b1!4m5!3m4!1s0x487b21654b02538b:0x84576a57e21973ff!8m2!3d53.4308294!4d-2.96083?hl=en' target='_blank'><b>Anfield Stadium</b> </a>")
+    .openPopup();
+
+var ARS =
+    L.marker([51.554908, -0.108655], {
+        icon: customENG,
+        title: ""
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.arsenal.com/' target='_blank'><b>Arsenal FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Emirates+Stadium/@51.5548918,-0.1106267,719m/data=!3m2!1e3!4b1!4m5!3m4!1s0x48761b7645295e3b:0x3600713c8382cf90!8m2!3d51.5548885!4d-0.108438?hl=en' target='_blank'><b>Emirates Stadium</b> </a>")
+    .openPopup();
+
+var TOT =
+    L.marker([51.604119, -0.066282], {
+        icon: customENG,
+        title: ""
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.tottenhamhotspur.com/' target='_blank'><b>Tottenham Hotspur FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Tottenham+Hotspur+Stadium/@51.6042889,-0.06857,718m/data=!3m2!1e3!4b1!4m5!3m4!1s0x48761e98d5d88ec3:0x572dd66a0e5f79bf!8m2!3d51.6042856!4d-0.0663813?hl=en' target='_blank'><b>Tottenham Hotspur Stadium</b> </a>")
+    .openPopup();
+
+
+
+//----------Adding top 20 teams----------
+
+
+var ATL =
+    L.marker([40.401649, -3.720742], {
+        icon: customSPN,
+        title: "Simone team"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://en.atleticodemadrid.com/' target='_blank'><b>Atlético Madrid</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Vicente+Calder%C3%B3n+Stadium/@40.4016528,-3.7227609,812m/data=!3m2!1e3!5s0xd4227c328f2a74b:0x87b8070b9f510998!4m5!3m4!1s0xd4227c329c41757:0x25b4cf6085a7157e!8m2!3d40.4017243!4d-3.720635?hl=en' target='_blank'><b>Vicente Calderón</b> </a>")
+    .openPopup();
+
+var PSG =
+    L.marker([48.841343, 2.253091], {
+        icon: customFRA,
+        title: "Simone team"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://en.psg.fr/' target='_blank'><b>Paris Saint-Germain F.C.</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Le+Parc+des+Princes/@48.8414391,2.25086,761m/data=!3m2!1e3!4b1!4m5!3m4!1s0x47e67ac09948a18d:0xdd2450406cef2c5c!8m2!3d48.8414356!4d2.2530487?hl=en' target='_blank'><b>Le Parc des Princes</b> </a>")
+    .openPopup();
+
+var BVB =
+    L.marker([51.492575, 7.451719], {
+        icon: customGER,
+        title: "The yellow wall"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.bvb.de/eng' target='_blank'><b>Borussia Dortmund</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Signal+Iduna+Park/@51.4925921,7.4496687,720m/data=!3m2!1e3!4b1!4m5!3m4!1s0x47b919d39230d60f:0x8fd9c195ad02eddf!8m2!3d51.4925888!4d7.4518574?hl=en' target='_blank'><b>Signal Iduna Park</b> </a>")
+    .openPopup();
+
+var S04 =
+    L.marker([51.554478, 7.067331], {
+        icon: customGER,
+        title: "a decent team"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://schalke04.de/en/' target='_blank'><b>FC Schalke 04</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/VELTINS-Arena/@51.5546342,7.0653375,719m/data=!3m2!1e3!4b1!4m5!3m4!1s0x47b8e60a1cf65009:0xdfce5aff64fdbf72!8m2!3d51.5546309!4d7.0675262?hl=en' target='_blank'><b>VELTINS Arena</b> </a>")
+    .openPopup();
+
+var WH =
+    L.marker([51.538604, -0.016366], {
+        icon: customENG,
+        title: "what and how"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.whufc.com/' target='_blank'><b>West Ham United FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/London+Stadium/@51.5389108,-0.0168465,1013m/data=!3m1!1e3!4m8!1m2!2m1!1swest+ham+stadium!3m4!1s0x0:0xe7fca44605b6ce94!8m2!3d51.5387099!4d-0.0166042?hl=en' target='_blank'><b>London Stadium</b> </a>")
+    .openPopup();
+
+var ASR =
+    L.marker([41.933883, 12.454904], {
+        icon: customITA,
+        title: "an okay team"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.asroma.com/' target='_blank'><b>AS Roma</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/Stadio+Olimpico/@41.934081,12.4525363,860m/data=!3m3!1e3!4b1!5s0x132f60bc30367e65:0xc82548f4e51c3a58!4m5!3m4!1s0x132f60bc3db30885:0x791c21ce91960617!8m2!3d41.934077!4d12.454725?hl=en' target='_blank'><b>Stadio Olimpico</b> </a>")
+    .openPopup();
+
+var ACM =
+    L.marker([45.477582, 9.122696], {
+        icon: customITA,
+        title: "used to be good"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.acmilan.com/en' target='_blank'><b>AC Milan</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/San+Siro+Stadium/@45.4781273,9.1217733,811m/data=!3m2!1e3!4b1!4m5!3m4!1s0x4786c193fa23f19d:0x9c7d30c7aeff312!8m2!3d45.4781236!4d9.123962?hl=en' target='_blank'><b>San Siro Stadium</b> </a>")
+    .openPopup();
+
+var INT =
+    L.marker([45.478851, 9.123798], {
+        icon: customITA,
+        title: "another former glory"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.inter.it/en/hp' target='_blank'><b>FC Inter Milan</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/San+Siro+Stadium/@45.4781273,9.1217733,811m/data=!3m2!1e3!4b1!4m5!3m4!1s0x4786c193fa23f19d:0x9c7d30c7aeff312!8m2!3d45.4781236!4d9.123962?hl=en' target='_blank'><b>San Siro Stadium</b> </a>")
+    .openPopup();
+
+var NAP =
+    L.marker([40.827909, 14.192949], {
+        icon: customITA,
+        title: "another former glory"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.sscnapoli.it/prehome/html/index.html' target='_blank'><b>SSC Napoli</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/San+Paolo+Stadium/@40.8279405,14.1908724,875m/data=!3m2!1e3!4b1!4m5!3m4!1s0x133b0932e1f5b2b9:0xc45ee1875b70f8e2!8m2!3d40.8279365!4d14.1930611?hl=en' target='_blank'><b>San Paolo Stadium</b> </a>")
+    .openPopup();
+
+var LEC =
+    L.marker([52.620340, -1.142395], {
+        icon: customENG,
+        title: "one season wonder"
+    })
+    //.addTo(map)
+    .bindPopup("Club: <a href='https://www.lcfc.com/' target='_blank'><b>Leicester City FC</b></a><br><br> Stadium: <a href='https://www.google.com/maps/place/King+Power+Stadium/@52.6203694,-1.1443782,702m/data=!3m2!1e3!4b1!4m5!3m4!1s0x487760d73d562bcb:0xcd89e0170e2399aa!8m2!3d52.6203662!4d-1.1421895?hl=en' target='_blank'><b>King Power Stadium</b> </a>")
+    .openPopup(); 
+
+
+
+
+var team1 = L.layerGroup([CFC, BAR, RMA, BAY, JUV, ARS, TOT, MU, MC, LIV]);
+var team2 = L.layerGroup([ASR, PSG, BVB, ATL, S04, INT, ACM, LEC, NAP, WH]);
+
+
+
+
+//layer control
+var baseMaps = {
+    "OpenStreetMap": OSM,
+    "Esri World Imagery": Esri_WI,
+    "Black and White Terrain": Esri_Terrain,
+};
+
+var overlayMaps = {
+ 
+    "Top 10 Team": team1,
+    "Top 20 Team": team2,
+    "Administrative Boundary": Admin,
+ 
+
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+
+</script>
+</body>
+</html>
