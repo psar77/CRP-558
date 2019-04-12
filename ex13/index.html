@@ -1,1 +1,529 @@
 
+
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/pavusel/68/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <title>Ex13:GeoJSON</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:600px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:600px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="EX13">
+  <meta name="author" content="P.Sar">
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+  <script src="https://psar77.github.io/CRP-558/ex13/map_point.geojson"></script> 
+  
+  <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+	        
+  
+<style id="jsbin-css">
+#map {
+     width: 600px;
+     height: 500px;
+     /* background-color: green; */
+}
+
+.legend {
+    line-height: 11px;
+    color: #555;
+   }
+
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+</style>
+</head>
+<body>
+  
+  <h1>Exercise 13</h1>
+  <h2>Loading GeoJSON</h2>
+  <p1>
+ This is a very simple map using two different techniques of loading the GeoJSON data. The interstate line data is loaded locally within the Javascript, while the city point data is loaded from an external GeoJSON in my GitHub.
+    <br><br>
+  <body1>  
+<div id='map'></div>
+	<br>
+    </body1>
+  
+  </p1>
+
+ <h3>Credits</h3> 
+  <p2>d
+Map Data and Script: OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 04/11/2019
+    
+<br><br><br>   
+</p2>
+<script id="jsbin-javascript">
+//base map layers
+var OSM =
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    //maxZoom: 18
+});
+
+var Esri_WI = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+
+
+var Esri_Terrain = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+	//maxZoom: 13
+});
+
+
+//creation of map
+var map = L.map('map', {
+      center: new L.LatLng(42,-93.5),
+      zoom: 7,
+      layers: OSM
+});
+
+//Layers & boundary stuff
+var Admin = L.tileLayer('https://maps.heigit.org/openmapsurfer/tiles/adminb/webmercator/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+
+
+
+//customIcons for My House and the cities
+
+var customIcon = L.icon({
+    iconUrl: 'https://openclipart.org/download/177826/color-icons-green-home.svg',
+
+  
+    iconSize:     [30], 
+    iconAnchor:   [15, 44],
+    popupAnchor:  [-5,-44]
+});
+
+var customIcon1 = L.icon({
+    iconUrl: 'https://cdn2.iconfinder.com/data/icons/country-flag-2/128/Cambodia_Flag-512.png',
+
+    iconSize:     [60], 
+    iconAnchor:   [30, 54],
+    popupAnchor:  [0,-54]
+});         
+
+
+
+
+
+
+// Local GeoJSON Interstate Highway data
+var path = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#0f4e9b",
+        "stroke-width": 3,
+        "stroke-opacity": 1,
+        "Name": "I-80"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -95.899658203125,
+            41.49212083968776
+          ],
+          [
+            -95.82824707031249,
+            41.49212083968776
+          ],
+          [
+            -95.77606201171875,
+            41.50240661583931
+          ],
+          [
+            -94.6966552734375,
+            41.50034959128928
+          ],
+          [
+            -94.65545654296875,
+            41.49212083968776
+          ],
+          [
+            -94.57855224609375,
+            41.498292501398545
+          ],
+          [
+            -94.36431884765625,
+            41.49623534616764
+          ],
+          [
+            -94.21875,
+            41.4941781255972
+          ],
+          [
+            -94.18304443359374,
+            41.52091689636249
+          ],
+          [
+            -94.0704345703125,
+            41.52091689636249
+          ],
+          [
+            -94.0155029296875,
+            41.541477666790286
+          ],
+          [
+            -93.922119140625,
+            41.55586631766996
+          ],
+          [
+            -93.80950927734374,
+            41.590796851056005
+          ],
+          [
+            -93.7738037109375,
+            41.59285100004952
+          ],
+          [
+            -93.7738037109375,
+            41.65034063112266
+          ],
+          [
+            -93.5650634765625,
+            41.65649719441145
+          ],
+          [
+            -93.39752197265625,
+            41.68316883525891
+          ],
+          [
+            -93.2684326171875,
+            41.691373270757246
+          ],
+          [
+            -93.2025146484375,
+            41.701627343789205
+          ],
+          [
+            -93.1365966796875,
+            41.68522004222073
+          ],
+          [
+            -93.0322265625,
+            41.68316883525891
+          ],
+          [
+            -92.89764404296875,
+            41.68111756290652
+          ],
+          [
+            -92.84820556640625,
+            41.69957665997156
+          ],
+          [
+            -92.1478271484375,
+            41.69752591075902
+          ],
+          [
+            -92.05718994140625,
+            41.68316883525891
+          ],
+          [
+            -91.77154541015625,
+            41.691373270757246
+          ],
+          [
+            -91.63970947265625,
+            41.69752591075902
+          ],
+          [
+            -91.56280517578125,
+            41.6872711837914
+          ],
+          [
+            -91.4996337890625,
+            41.6872711837914
+          ],
+          [
+            -91.44195556640625,
+            41.668808555620586
+          ],
+          [
+            -91.2249755859375,
+            41.66675682554943
+          ],
+          [
+            -91.1590576171875,
+            41.64623592868676
+          ],
+          [
+            -91.065673828125,
+            41.64213096472801
+          ],
+          [
+            -90.99151611328125,
+            41.63392025225949
+          ],
+          [
+            -90.8294677734375,
+            41.638025739250786
+          ],
+          [
+            -90.67840576171875,
+            41.6010669423553
+          ],
+          [
+            -90.5767822265625,
+            41.599013054830216
+          ],
+          [
+            -90.37902832031249,
+            41.5969591019372
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stroke": "#c82d06",
+        "stroke-width": 4,
+        "stroke-opacity": 1,
+        "Name": "I-35"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -93.3453369140625,
+            43.504736854976954
+          ],
+          [
+            -93.33984375,
+            43.20917969039356
+          ],
+          [
+            -93.36181640625,
+            43.153101551466385
+          ],
+          [
+            -93.3563232421875,
+            42.956422511073335
+          ],
+          [
+            -93.3563232421875,
+            42.8115217450979
+          ],
+          [
+            -93.4881591796875,
+            42.62991729384455
+          ],
+          [
+            -93.5870361328125,
+            42.55712670332118
+          ],
+          [
+            -93.5760498046875,
+            42.13896840458089
+          ],
+          [
+            -93.5760498046875,
+            42.0125705565935
+          ],
+          [
+            -93.570556640625,
+            41.75850773115232
+          ],
+          [
+            -93.58016967773438,
+            41.73750372422637
+          ],
+          [
+            -93.58016967773438,
+            41.6087684383814
+          ],
+          [
+            -93.592529296875,
+            41.59541859437006
+          ],
+          [
+            -93.77723693847656,
+            41.59285100004952
+          ],
+          [
+            -93.77105712890625,
+            41.52297326747377
+          ],
+          [
+            -93.78204345703125,
+            41.49212083968776
+          ],
+          [
+            -93.78753662109375,
+            41.1455697310095
+          ],
+          [
+            -93.779296875,
+            41.09798187627375
+          ],
+          [
+            -93.79852294921875,
+            41.023427276088945
+          ],
+          [
+            -93.80401611328125,
+            40.83874913796459
+          ],
+          [
+            -93.83148193359375,
+            40.80133575979201
+          ],
+          [
+            -93.84521484375,
+            40.7202010588415
+          ],
+          [
+            -93.86444091796875,
+            40.64730356252251
+          ],
+          [
+            -93.94958496093749,
+            40.57224011776902
+          ]
+        ]
+      }
+    }
+  ]
+}
+
+
+
+//colors to style line segment based on speed property
+function getColor(Name) {
+            return Name == 'I-35' ? 'blue' :
+                   Name == 'I-80'  ? 'red' :
+                   'yellow';
+            }
+
+//Style line and call getColor Function
+function style(feature) {
+            return {
+                weight: 4,
+                opacity: 1,
+                color: getColor(feature.properties.Name),
+            };
+        }
+
+var road = L.geoJson(path, {style: style}).addTo(map);
+
+road.addEventListener('click dblclick', function(e) {
+            alert(e.layer.feature.properties.Name)
+});
+
+
+
+
+//This is the GeoJSON external file using AJAX plug-ins.
+url = "https://raw.githubusercontent.com/psar77/CRP-558/master/ex13/map_point.geojson";
+
+
+var city = new L.GeoJSON.AJAX(url , {
+	style: style,
+	onEachFeature: function (feature, layer) {
+        htmlText = "City: " + "<strong>" + feature.properties.Name+ "</strong><br>Size: <b>"  + feature.properties.Size;
+        layer.bindPopup(htmlText);
+		layer.bindTooltip(feature.properties.Name);
+    }
+}).addTo(map);
+
+
+
+//layer control
+var baseMaps = {
+  "OpenStreetMap": OSM,
+  "Esri World Imagery": Esri_WI,
+  "Black and White Terrain": Esri_Terrain,
+};
+ 
+var overlayMaps = {
+  "Interstate": road,
+  "City": city,
+  "Administrative Boundary": Admin,
+  
+};
+
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+
+
+</script>
+</body>
+</html>
