@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/nuyizow/5/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <title>Ex15: Turf.js</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:600px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:600px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ex15">
+  <meta name="author" content="P.Sar">
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+  <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+	
+	<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+	
+	
+<script src="https://code.jquery.com/jquery-2.0.3.js"></script>
+	
+<script src="https://npmcdn.com/@turf/turf@3.5.1/turf.min.js"></script>	
+	
+<script>
+    var bbox = turf.bbox(features);
+</script>
+	
+<style id="jsbin-css">
+#mapid {
+     width: 600px;
+     height: 500px;
+     /* background-color: green; */
+}
+</style>
+</head>
+<body>
+  
+  <h1>Exercise 15</h1>
+  <h2>Turf.js</h2>
+ 
+  
+    <br>
+  <body1>  
+<div id="mapid"></div>
+	<br><br>
+    </body1>
+  <p1>
+    <u> The tools that I find useful in my future projects are: <br><br></u> 
+    
+    <b><u>1. Area:</b></u> This tool would be generally very useful, as it can get a rough est. of an area in square meters from one or more features. The features can be extracted from Google map or GeoJSON website. <br><br>
+    
+    <b><u>2. Buffer:</b></u> This is one of the most common tools in terms of geodesign and mapmaking. It can easily create an area based on radius size surrounding a feature with any kinds of shape. It can be used on points, lines, polygons, etc. <br><br>
+    
+    <b><u>3. Distance/Length: </b></u> While the Distance tool only measure from one points to another, the Length tool can measure the distance of GeoJSON, which can be multiple feature points. They are very similar and very effective tools in getting the distance of map features, whether it be points or lines.<br><br>
+    
+    <b><u>4. Intersect: </b></u> This tool allows two polygons intersect each other, if they share the borders. The Intersect tool is very helpful when it comes to finding common boundary between two things, and it can be used in almost all kinds of GIS or planning situations.<br><br>
+    
+    <b><u>5. Difference: </b></u> This tool is almost the opposite version of the Intersect tool. Rather than finding the common ground between two features, the Difference tool finds the contrast between them and cuts that part out. This tool will also be incredibly helpful in terms of cleaning up the map. By simply clipping features against each other, it can get rid of some rough edges or unwanted parts of features around the map.<br><br>
+  
+  
+ 
+  </p1>
+
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap & Leaflet & <a href="https://turfjs.org/" target="_blank">Turf.js</a><br>Map Drawn by: Panhavuth Sar<br>Date: 04/18/2019
+    
+<br><br><br>   
+</p2>
+<script id="jsbin-javascript">
+console.clear();
+//note that http://icons.webtoolhub.com/icon-p4s2023-set.aspx  used for the green icon source.
+
+//JSON of the line
+  //1. I changed the location of the line to sort of follow highway 30 there. I also changed its color and style to separate from the polygon.
+var myLine = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -93.78170013427734,
+            42.02353839996035
+          ],
+          [
+            -93.7295150756836,
+            42.02328335531967
+          ],
+          [
+            -93.67286682128906,
+            42.00695837037897
+          ],
+          [
+            -93.65329742431639,
+            42.00670325924093
+          ],
+          [
+            -93.64128112792969,
+            42.00211108382355
+          ],
+          [
+            -93.5489273071289,
+            42.00925432458585
+          ],
+          [
+            -93.49056243896484,
+            42.0089992226549
+          ]
+        ]
+      }
+    }
+  ]
+};
+
+
+//JSON of the Polygon
+  //2. I basically created a new polygon covering up the campus area, including Freddie court and other admins building up north.
+var myPolygon = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -93.65424156188965,
+              42.022757322517194
+            ],
+            [
+              -93.63338470458984,
+              42.02278920341697
+            ],
+            [
+              -93.63340616226196,
+              42.02696546307967
+            ],
+            [
+              -93.63387823104857,
+              42.02801745469958
+            ],
+            [
+              -93.63525152206421,
+              42.02879846752112
+            ],
+            [
+              -93.63881349563597,
+              42.029961999438704
+            ],
+            [
+              -93.63780498504639,
+              42.034488414165054
+            ],
+            [
+              -93.63911390304565,
+              42.03503028728075
+            ],
+            [
+              -93.64031553268433,
+              42.03547653225998
+            ],
+            [
+              -93.64123821258545,
+              42.035588093015235
+            ],
+            [
+              -93.64473581314085,
+              42.035588093015235
+            ],
+            [
+              -93.64716053009033,
+              42.03549246952274
+            ],
+            [
+              -93.64973545074463,
+              42.03487091331455
+            ],
+            [
+              -93.64977836608887,
+              42.033882785803804
+            ],
+            [
+              -93.65044355392456,
+              42.03353215622012
+            ],
+            [
+              -93.65175247192383,
+              42.03232087550263
+            ],
+            [
+              -93.65188121795654,
+              42.030456095591575
+            ],
+            [
+              -93.65424156188965,
+              42.03044015706596
+            ],
+            [
+              -93.65437030792236,
+              42.029993876725754
+            ],
+            [
+              -93.65471363067627,
+              42.02946789944525
+            ],
+            [
+              -93.65467071533203,
+              42.02828841941858
+            ],
+            [
+              -93.65449905395508,
+              42.02779430641674
+            ],
+            [
+              -93.65432739257812,
+              42.027300189574305
+            ],
+            [
+              -93.65424156188965,
+              42.022757322517194
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+};
+
+
+
+//Calculate the length of the polyline in miles
+var length = turf.lineDistance(myLine, 'miles');
+console.log("myLine = "+ length + " miles");
+
+
+
+//calculates the area of the mPolygon in sq meters and sq miles
+var area = turf.area(myPolygon);
+	console.log(area + " sq meters");
+	console.log(area * 0.000000386102158542 + " sq miles");
+	
+
+//The green marker point on the map
+  //3. I changed the main coordinate point to be at Lied Rec Center.
+var myPoint = {
+  "type": "Feature",
+  "properties": {
+    "marker-color": "#0f0"
+  },
+  "geometry": {
+    "type": "Point",
+    "coordinates": [42.026113, -93.634818]  
+//change to 42.05 to cover blue marker and the closest white circle will change
+  }
+};
+
+
+//these are the three white circle markers
+  //4. I also changed the points to be the place I went to the most frequently in Ames.
+var myPointCollection = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+		  id: "My Apartment"
+	  },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-93.679461,
+              42.033319]
+      }
+    }, {
+      "type": "Feature",
+      "properties": {
+		  		  id: "North Walmart"
+	  },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-93.621976,
+              42.053101]
+      }
+    },{
+      "type": "Feature",
+      "properties": {
+		  		  id: "South Walmart"
+	  },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-93.608052,
+              42.016216]
+      }
+    }
+  ]
+};
+
+
+
+
+//This calculation is geodesic distance of the white circle that is closest to the green marker.
+var nearest = turf.nearest(myPoint, myPointCollection);
+
+var nearestID = nearest.properties.id;
+
+console.log(nearest.properties.id);
+
+
+
+
+
+
+
+
+	
+
+
+//*****************
+var mapCenter = L.latLng(42.03,-93.65);
+
+	
+var map = L.map('mapid').setView(mapCenter, 12);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+		attribution: ''
+	}).addTo(map);
+
+var mapCenterMarker = L.marker(mapCenter)
+    .addTo(map)
+    .bindPopup("Map Center");
+
+//5. I added a new marker to the map to separately show the map center and the main coordinate point. As the shown in the map, south walmart is the closest point to the reference point, which is Lied.
+
+var mapCenterMarker1 = L.marker(myPoint.geometry.coordinates)
+    .addTo(map)
+    .bindPopup("Reference Point: Lied Rec Center");
+
+
+
+//This style is for the line only.
+var myStyle = {
+    "color": "blue",
+    "weight": 5,
+    "opacity": 0.65
+};
+
+//While this one is for the polygon.
+var myStyleP = {
+    "color": "green",
+    "weight": 3,
+    "opacity": 0.65
+};
+
+
+var myPointIcon = L.icon({
+		iconUrl: 'https://profseeger.github.io/LA558/images/chartreuseMapMarker.png',
+		iconSize: [32, 32],
+		iconAnchor: [16, 32],
+		//popupAnchor: [0, -28]
+	});
+
+startPoint =  L.geoJSON(myPoint, {
+		pointToLayer: function (feature, latlng) {
+			return L.marker(latlng, {icon: myPointIcon});
+		},
+		//onEachFeature: onEachFeature
+	}).addTo(map);
+
+
+L.geoJSON(myLine, {
+    style: myStyle
+}).addTo(map)
+  .bindPopup("US Highway 30");
+
+
+L.geoJSON(myPolygon, {
+    style: myStyleP
+}).addTo(map)
+  .bindPopup("Campus Area: "+"<b>"+area+" sq. m. </b>");
+
+
+//if the ID of the item identified as being the nearest matches d, then change color of item to orange.
+function getColor(d) {
+    return d == nearestID ? 'orange' :
+                'white';
+}
+
+var geojsonMarkerOptions = {
+    radius: 7,
+    //fillColor: "white",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+L.geoJSON(myPointCollection, {
+    pointToLayer: function (feature, latlng) {
+        return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+	style: function(feature) {
+	console.log(feature.properties.id);//note this is how you access contents of the id within L.geoJson
+		return {
+					//radius: some property from geojson,
+					fillColor: getColor(feature.properties.id)
+				};
+			},
+			onEachFeature: function (feature, layer) {
+				layer.bindPopup("ID: "+feature.properties.id);
+			}
+	
+}).addTo(map);
+
+</script>
+</body>
+</html>
