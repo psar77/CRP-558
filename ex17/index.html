@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/pavusel/72/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <title>Ex17: MapBox</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:600px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:600px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="Ex17">
+  <meta name="author" content="P.Sar">
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+
+  
+          
+  
+  
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+  
+  
+<style id="jsbin-css">
+#map {
+     width: 600px;
+     height: 500px;
+     /* background-color: green; */
+}
+
+.legend {
+    line-height: 11px;
+    color: #555;
+   }
+
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+</style>
+</head>
+<body>
+  
+  <h1>Exercise 17</h1>
+  <h2>MapBox Studio</h2><br>
+ 
+
+    
+
+<p1 align="left">The changes that I made for this map are: <br><br>
+  
+  <li>Road color (Iowa State's cardinal and gold color).</li>
+        <li>Background color and Landuse color.</li>
+        <li>Background color changes with zoom.</li>
+        <li>Font size of City/Town and their color changes with zoom.</li></p1>
+    <br><br>
+  <body1>  
+<div id='map'></div>
+    
+    
+    
+	<br>
+    </body1>
+  
+ 
+
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: OpenStreetMap & Leaflet & MapBox Studio<br>Map Drawn by: Panhavuth Sar<br>Date: 04/30/2019
+    
+<br><br><br>   
+</p2>
+<script id="jsbin-javascript">
+//base map layers
+var OSM =
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    //maxZoom: 18
+});
+
+var MB = L.tileLayer('https://api.mapbox.com/styles/v1/psar0707/cjv4jzmcy704z1fodsq54urep/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicHNhcjA3MDciLCJhIjoiY2p2NGp0a3JvMnJpOTN5cGZjZ2cxYTNteiJ9.n3-X44FOzOBUqKJsqrduSg', {
+attribution: 'Some author info'
+});
+
+
+//mapbox://styles/psar0707/cjv4jzmcy704z1fodsq54urep
+
+//https://api.mapbox.com/styles/v1/psar0707/cjv4jzmcy704z1fodsq54urep.html?fresh=true&title=true&access_token=pk.eyJ1IjoicHNhcjA3MDciLCJhIjoiY2p2NGp0a3JvMnJpOTN5cGZjZ2cxYTNteiJ9.n3-X44FOzOBUqKJsqrduSg#10.8/41.609473/-93.620663/0
+
+
+//creation of map
+var map = L.map('map', {
+      center: new L.LatLng(42.025,-93.65),
+      zoom: 12,
+      layers: MB
+});
+
+
+//layer control
+var baseMaps = {
+  "OpenStreetMap": OSM,
+  "MapBox Studio": MB,
+
+};
+ 
+
+L.control.layers(baseMaps).addTo(map);
+
+
+
+</script>
+</body>
+</html>
