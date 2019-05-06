@@ -1,1 +1,452 @@
 
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by psar77 (http://jsbin.com/pavusel/83/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <title>Final</title>
+  <style>
+    
+    h1{color:darkgoldenrod;
+      font-family:verdana;
+      font-size:45px;
+      text-align:center}
+    
+    h2{color:#676767;
+      font-family:verdana;
+      text-align: center;
+      font-size:30px}
+      
+    h3{color:#676767;
+      font-family:verdana;
+      font-size:20px}
+      
+    p1 {color:black;
+      font-family:arial;
+      font-size:17px}
+      
+    p2 {color:black;
+      font-family:arial;
+      font-size:14px;
+      font-style: italic}
+    
+    body{background-color:#e7e7e7;
+        width:800px;
+        text-align: center;
+        vertical-align: middle;
+        margin: auto}
+    
+    body1{background-color:#e7e7e7;
+        width:800px;
+        text-align: left;
+        vertical-align: middle;
+        margin: auto}
+    
+    div{vertical-align: middle;
+      margin: auto}
+    
+  </style>
+  <meta charset="UTF-8">
+  <meta name="description" content="Final">
+  <meta name="author" content="P.Sar">
+  
+  
+  <style>
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:auto}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  //height: 1200px;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 18px;
+  margin-top: -22px;
+  margin-left: -400px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: grey;
+}
+
+/* Caption text */
+.text {
+  color: black;
+  font-size: 22px;
+  padding: 0px 12px;
+  position: absolute;
+  bottom: -80px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/8 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+</style>
+  
+	
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+			integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+			crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+			integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+			crossorigin=""></script>
+		<script src="https://raw.githubusercontent.com/Igor-Vladyka/leaflet.browser.print/master/dist/leaflet.browser.print.min.js"></script>
+  
+  
+<style>
+.mySlides {display:none;}
+</style>
+	
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" /> <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+	
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+
+  <script src="https://indicator.extension.iastate.edu/classes/leaflet-ajax-gh-pages/dist/leaflet.ajax.min.js"></script>
+  
+  
+<style id="jsbin-css">
+#map {
+     width: 800px;
+     height: 600px;
+     /* background-color: green; */
+}
+
+.legend {
+    line-height: 11px;
+    color: #555;
+   }
+
+.legend i {
+    width: 18px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 10px/20px Arial, Helvetica, sans-serif;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+</style>
+</head>
+<body>
+  
+  <h1>Final Project</h1>
+  <h2>The Urban Transformation of Phnom Penh</h2>
+  <p1><br>
+    For the final project, I decided to demonstrate my hometown city and the place of my research interest through what I have learned in the class. I want to look at a very basic level of how Phnom Penh, the capital city of Cambodia, has changed over the years. With very limited GIS and official census data existed, I have gathered a few simple types of data in this webpage from both local and NGOs website. Below is a very simple image comparing how the city has changed in the span of less than 15 years.
+    <br><br>
+    
+    <iframe frameborder="0" class="juxtapose" width="100%" height="580" src="https://cdn.knightlab.com/libs/juxtapose/latest/embed/index.html?uid=e6fe0328-6f8f-11e9-8106-0edaf8f81e27"></iframe>
+    
+    
+    
+    The HighChart below shows the total urban population of the country in comparison with the population of Phnom Penh. Since it is the capital city, the city population constitutes a majority of the whole urban population. There was a huge drop in both population during the 1970s due to the aftermath of the Vietnam war, which resulted in many conflicts and civil wars in Cambodia. Since then, the population has steadily climbing up with more development happening in the city. The population of Phnom Penh today is well above 2 million, and the total urban population of the whole country is only around 3.5 million.
+    
+    <br><br>
+    <body1>  
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<div id="container" style="min-width: 310px; height: 450px; margin: 0 auto"></div>
+	<br><br>
+        
+<script id="jsbin-javascript">
+
+
+Highcharts.chart('container', {
+
+    title: {
+        text: 'Urban Population of Cambodia vs Phnom Penh Population'
+    },
+
+    subtitle: {
+        text: 'Source: WorldBank Data & World Population Review'
+    },
+
+    yAxis: {
+        title: {
+            text: 'Population in Million'
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+    plotOptions: {
+        series: {	connectNulls: true,
+            label: {
+                connectorAllowed: false
+                
+            },
+            pointStart: 1960
+        }
+    },
+
+    series: [{
+        name: 'Phnom Penh Population',
+        data: [389280,null,null,null,null, 436000,null,null,null,null,900000,null,null,null,null,100000,null,null,null,null,238267,null,null,null,null,247000,null,null,null,null,615000,null,null,null,null,835885,null,null,null,null,1148708,null,null,null,null,1316793,null,null,null,null,1522747,null,null,null,null,1778611,null,null,null,2014015 ]
+    
+    }, {
+        name: 'Cambodia Urban Population',
+        data: [558546, 604509, 622930, 649108, 675073, 700397, 724324, 808790, 900960,1002916,1117077,1335972,1592747,1881408,2118255,336786,356818,373095,387981,406056,662385,859855,901498,955167,1014595,1074495,1133517,1193261,1255202,1321707,1394996,1475422,1561955,1653438,1748044,1844237,1941642,2040036,2128765,2194908,2258637,2319635,2377856,2433996,2489226,2544428,2599633,2655056,2716554,2808178,2903316,3003963,3108609,3217109,3328880,3443053,3559458,3678035]
+   
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 800
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+});
+
+
+</script>
+    </body1>
+  <br>
+    
+    Like most developing countries, development always come with several urban and poverty issues, land disputes, and infrastructure shortage in the city. With the Phnom Penh being one of the fastest growing city in Asia, this presents a whole other sets of social and technical problems. The infrastructure system of the city simply could not cope with such rapid growth, since the city was originally designed to host no more than half a million population, a quarter of what it is now. The slideshow of historical maps below shows the gradual changes within the city landscape prior to the war periods. 
+    
+    <br><br>
+    
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+  <div class="numbertext">1 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1890.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1890</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">2 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1910.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1910</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1922.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1922</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">4 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1937.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1937</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">5 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1943.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1943</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">6 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1958.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1958</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">7 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1968.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1968</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">8 / 8</div>
+  <img src="https://raw.githubusercontent.com/psar77/CRP-558/master/final/1994.jpg" style="width:100%">
+  <div class="text">Phnom Penh 1994</div>
+</div>
+
+
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span>
+  <span class="dot" onclick="currentSlide(4)"></span>
+  <span class="dot" onclick="currentSlide(5)"></span>
+  <span class="dot" onclick="currentSlide(6)"></span>
+  <span class="dot" onclick="currentSlide(7)"></span>
+  <span class="dot" onclick="currentSlide(8)"></span>
+</div>
+
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
+  
+  
+    <br><br><br><br>
+    
+   There have been several attempts to try to control the growth pattern of the city, but not much has been accomplished so far. The city and the government occasionally issued a loose draft of a "master plan" of the city, but very little of the plan has actually been implemented. The image below shows the latest attempt to carry out a master plan for the city for the year 2035, but the validity and effectiveness of the plan are highly questionable. Please feel free to click on the image for larger resolution.
+    <br><br>
+    
+    <a href="final/MasterPlanS.jpg" target='_blank'>
+<img border="0" alt="W3Schools" src="final/MasterPlanS.jpg" width="800px" height="532px"> </a>
+    
+    
+    <br><br><br><br>
+    
+    
+    
+    
+  
+  
+  <body1>  
+    
+    For the final part of this project, I wanted to experiment with ArcGIS Online rather than Leaflet, since there were plenty of Leaflet exercises and assignments throughout the semester. Since it is practically like ArcMap, it is pretty straightforward and I find it a lot quicker and easier to use than Leaflet. The ArcGIS map below shows several layers of basic infrastructure and facilities around the city. I added a layer called Property Tax to try and show the land value of different areas in the city, but it might not be very clear. This <a href="https://www.phnompenhpost.com/average-land-price-phnom-penh" target='_blank'>website here</a> has a very detail HighChart of land value of different neighborhoods in Phnom Penh city.
+    
+
+	<br><br>
+    
+   
+<style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><small><a href="https://www.arcgis.com/apps/Embed/index.html?webmap=e3c6f2166f88482d825226cab3744fba&extent=104.8495,11.5244,104.9763,11.5967&home=true&zoom=true&scale=true&search=true&searchextent=true&legendlayers=true&basemap_gallery=true&disable_scroll=false&theme=light" style="color:#0000FF;text-align:left" target="_blank">View larger map</a></small><br><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Basic Urban Data of Phnom Penh" src="https://www.arcgis.com/apps/Embed/index.html?webmap=e3c6f2166f88482d825226cab3744fba&extent=104.8495,11.5244,104.9763,11.5967&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&legendlayers=true&basemap_gallery=true&disable_scroll=false&theme=light"></iframe></div>
+   <br><br> 
+    
+    
+    
+    
+    
+ 
+     
+  </p1>
+ 
+ <h3>Credits</h3> 
+  <p2>
+Map Data and Script: ArcGIS Online & OpenStreetMap & Leaflet<br>Map Drawn by: Panhavuth Sar<br>Date: 05/06/2019
+    
+<br><br>    
+</p2>
+</body>
+</html>
